@@ -11,20 +11,22 @@ int main()
 	FILE * f;
 	int n;
 
+	/* открытие файла */
 	getline(std::cin, temp);
 	f = fopen(temp.c_str(), "w");
 	if (f == NULL)
 		perror("Error opening file");
 
+	/* создание сервера */
 	Server s(f);
+
+	/* получение информации о клиентах*/
 	getline(std::cin, temp);
 	n = atoi(temp.c_str());
 	if (n < 1)
 		perror("Uncorrect number of client");
-
 	int* delays = new int[n];
 	std::vector<std::string> allMessage;
-
 	for (int i = 0; i < n; i++)
 	{
 		getline(std::cin, temp);
@@ -35,6 +37,7 @@ int main()
 		allMessage.push_back(temp2);
 	}
 
+	/* добавление клиентов */
 	for (int i = 0; i < n; i++)
 	{
 		s.addClient(allMessage.back(), delays[n-i-1], n-i);
@@ -43,6 +46,7 @@ int main()
 
 	delete[] delays;
 		
+	/* вывод в чат сообщений */
 	while (true)
 	{
 		s.ejectMessage();
